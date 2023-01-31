@@ -6,20 +6,16 @@ import Notification from '../Notification';
 import { Wrapper } from './App.styled';
 
 export default class App extends Component {
-  static defaultProps = {
-    feedbackTypes: ['good', 'neutral', 'bad'],
-  };
-
+  
   state = {
     good: 0,
     neutral: 0,
     bad: 0,
   };
 
-  onLeaveFeedback = feedbackType => {
-    this.setState(prevState => ({
-      [feedbackType]: prevState[feedbackType] + 1,
-    }));
+  onLeaveFeedback = event => {
+    const { name } = event.target;
+    this.setState(prevState => ({ [name]: prevState[name] + 1 }));
   };
 
   countTotalFeedback = () => {
@@ -35,12 +31,12 @@ export default class App extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
-    const { feedbackTypes } = this.props;
+  
     return (
       <Wrapper>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={feedbackTypes}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.onLeaveFeedback}
           ></FeedbackOptions>
         </Section>
